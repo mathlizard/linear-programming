@@ -194,12 +194,6 @@ bool simplexStep(Matrix<T>& matrix){
 	// 'matrix[j][column_index] == static_cast<T>(0.0)'
 	// in each row, except for the row of the pivot
 	
-	for(size_t j=0;j<matrix.get_dim_rows();++j){
-		for(size_t l=0;l<matrix.get_dim_columns();++l)
-			std::cerr<<matrix(j,l)<< " ";
-		std::cerr<<std::endl;
-	}
-	std::cerr<<std::endl;
 	return true; // simplex step was successful
 }
 
@@ -272,9 +266,9 @@ int main(){
 	// i.e. we assume that the LP problem is in canonical form. 
 	Matrix<float> matrix(dim_rows, dim_columns);
 	std::ifstream input_matrix("input.txt");
-	std::copy(	std::istream_iterator<float>(input_matrix),
-				std::istream_iterator<float>(),
-				matrix.begin() );
+	std::copy( std::istream_iterator<float>(input_matrix),
+		   std::istream_iterator<float>(),
+		   matrix.begin() );
 	
 	performSimplex( matrix ); // performs the simplex algorithm on matrix
 							  // the first row of the matrix contains the 
@@ -286,9 +280,9 @@ int main(){
 	
 	// Writing into file with a non-buffered stream is slow. 
 	// But it's going to be satisfactory, for our purposes here. 
-	std::copy(	matrix.begin(),
-				matrix.end(),
-				my_ostream_iterator<float>(output_file," ",dim_columns) ); // if you want it without the extra formatting, use: std::ostream_iterator<float>(output_file, " ") );
+	std::copy( matrix.begin(),
+		   matrix.end(),
+		   my_ostream_iterator<float>(output_file," ",dim_columns) ); // if you want it without the extra formatting, use: std::ostream_iterator<float>(output_file, " ") );
 	output_file.flush();
   return 0;
 }
